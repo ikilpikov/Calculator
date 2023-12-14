@@ -1,9 +1,7 @@
 package main;
 
-
 import calculator.Calculator;
 import calculator.Converter;
-
 import java.util.Scanner;
 
 public class Main {
