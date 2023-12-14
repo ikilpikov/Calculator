@@ -14,9 +14,9 @@ public class ConverterTest {
     }
     @Test
     public void makePostfixExpression() {
-        var expectedPostfixExpression = "17 5 22 - 4 * +";
+        var expectedPostfixExpression = "17.2 5 22 - 4 * +";
         var actualPostfixExpression = converter
-                .makePostfixExpression("17 + (5 - 22) * 4");
+                .makePostfixExpression("17.2 + (5 - 22) * 4");
 
         assertEquals(expectedPostfixExpression, actualPostfixExpression);
     }

@@ -16,10 +16,10 @@ public class CalculatorTest {
 
     @Test
     public void calculatePostfixExpression() {
-        var expression = "17 5 22 - 4 * +";
+        var expression = "17.2 5 22 - 4 * +";
         var actualResult = calculator.calculatePostfixExpression(expression);
 
-        var expectedResult = -51.0;
+        var expectedResult = -50.8;
 
         assertEquals(expectedResult, actualResult, 0.01);
     }

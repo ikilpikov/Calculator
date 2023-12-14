@@ -8,7 +8,7 @@ public class Converter {
         var stack = new Stack<Character>();
 
         for (char ch : infixExpression.toCharArray()) {
-            if (Character.isDigit(ch)) {
+            if (Character.isDigit(ch) || ch == '.') {
                 postfix.append(ch);
             } else if (isOperator(ch)) {
                 postfix.append(" ");
