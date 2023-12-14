@@ -9,8 +9,9 @@ public class Converter {
 
         for (char ch : infixExpression.toCharArray()) {
             if (Character.isDigit(ch)) {
-                postfix.append(ch).append(" ");
+                postfix.append(ch);
             } else if (isOperator(ch)) {
+                postfix.append(" ");
                 while (!stack.isEmpty() && getPriority(stack.peek()) >= getPriority(ch)) {
                     postfix.append(stack.pop()).append(" ");
                 }
@@ -19,14 +20,14 @@ public class Converter {
                 stack.push(ch);
             } else if (ch == ')') {
                 while (!stack.isEmpty() && stack.peek() != '(') {
-                    postfix.append(stack.pop()).append(" ");
+                    postfix.append(" ").append(stack.pop());
                 }
                 stack.pop();
             }
         }
 
         while (!stack.isEmpty()) {
-            postfix.append(stack.pop()).append(" ");
+            postfix.append(" ").append(stack.pop());
         }
 
         return postfix.toString().trim();

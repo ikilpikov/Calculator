@@ -14,7 +14,7 @@ public class Calculator {
 
         var stack = new Stack<Double>();
 
-        for (String token : tokens) {
+        for (var token : tokens) {
             if (token.matches("^(-?)(0|([1-9][0-9]*))(\\.[0-9]+)?$")) {
                 stack.push(Double.parseDouble(token));
             } else {

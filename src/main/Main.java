@@ -10,7 +10,7 @@ public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
 
-        System.out.println("Input an expression: ");
+        System.out.print("Input an expression: ");
         var infixExpression = scanner.nextLine();
         var postfixExpression = new Converter()
                 .makePostfixExpression(infixExpression);
