@@ -4,13 +4,20 @@ import java.util.Stack;
 import java.util.function.BinaryOperator;
 
 public class Calculator {
+    private Converter converter;
     BinaryOperator<Double> add = (a, b) -> a + b;
-    BinaryOperator<Double> substract = (a, b) -> a - b;
+    BinaryOperator<Double> subtract = (a, b) -> a - b;
     BinaryOperator<Double> multiply = (a, b) -> a * b;
     BinaryOperator<Double> divide = (a, b) -> a / b;
 
-    public double calculatePostfixExpression(String expression) {
-        String[] tokens = expression.split(" ");
+
+    public Calculator(Converter converter) {
+        this.converter = converter;
+    }
+
+    public double calculateExpression(String expression) {
+        String postfixExpression = convertExpressionToPostfix(expression);
+        String[] tokens = postfixExpression.split(" ");
 
         var stack = new Stack<Double>();
 
@@ -28,12 +35,16 @@ public class Calculator {
         return stack.pop();
     }
 
+    public String convertExpressionToPostfix(String infixExpression) {
+        return converter.makePostfixExpression(infixExpression);
+    }
+
     public double calculateOperands(char operation, double a, double b) {
         switch (operation) {
             case '+':
                 return add.apply(a, b);
             case '-':
-                return substract.apply(a, b);
+                return subtract.apply(a, b);
             case '*':
                 return multiply.apply(a, b);
             case '/':

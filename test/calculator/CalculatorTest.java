@@ -1,34 +1,55 @@
 package calculator;
 
-import calculator.Calculator;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.CsvFileSource;
+import org.junit.jupiter.params.provider.MethodSource;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 
-import static org.junit.Assert.*;
+import java.util.stream.Stream;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CalculatorTest {
     Calculator calculator;
-    @Before
-    public void setUp(){
-        calculator = new Calculator();
+    static final double DELTA = 0.01;
+
+    @BeforeEach
+    public void setUp() {
+        calculator = new Calculator(new Converter());
     }
 
+    @ParameterizedTest
+    @CsvFileSource(resources = "/calculator-test-cases.csv")
+    void calculateExpressionTest(String expression, double expectedResult) {
+        double actualResult = calculator.calculateExpression(expression);
+        assertEquals(expectedResult, actualResult, DELTA);
+    }
+
+    @ParameterizedTest
+    @MethodSource("getCalculationArguments")
+    void calculateOperands(double expected, char operation, double a, double b) {
+        double actual = calculator.calculateOperands(operation, a, b);
+        assertEquals(expected, actual, DELTA);
+    }
 
     @Test
-    public void calculatePostfixExpression() {
-        var expression = "17.2 5 22 - 4 * +";
-        var actualResult = calculator.calculatePostfixExpression(expression);
-
-        var expectedResult = -50.8;
-
-        assertEquals(expectedResult, actualResult, 0.01);
+    void divideByZero() {
+        assertThrows(IllegalArgumentException.class, () -> calculator.calculateExpression("1 / 0"));
     }
 
-    @Test
-    public void calculateOperands() {
-        assertEquals(5, calculator.calculateOperands('+', 2, 3), 0.01);
-        assertEquals(-1, calculator.calculateOperands('-', 2, 3), 0.01);
-        assertEquals(6, calculator.calculateOperands('*', 2, 3), 0.01);
-        assertEquals(5, calculator.calculateOperands('/', 10, 2), 0.01);
+    private static Stream<Arguments> getCalculationArguments() {
+        return Stream.of(
+                Arguments.of(5, '+', 2, 3),
+                Arguments.of(-1, '-', 2, 3),
+                Arguments.of(6, '*', 2, 3),
+                Arguments.of(5, '/', 10, 2)
+        );
     }
+
 }

@@ -10,12 +10,10 @@ public class Main {
 
         System.out.print("Input an expression: ");
         var infixExpression = scanner.nextLine();
-        var postfixExpression = new Converter()
-                .makePostfixExpression(infixExpression);
 
-        var calculator = new Calculator();
+        var calculator = new Calculator(new Converter());
         var result = calculator
-                .calculatePostfixExpression(postfixExpression);
+                .calculateExpression(infixExpression);
 
         System.out.println("Result is: " + result);
     }
