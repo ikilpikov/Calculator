@@ -1,14 +1,11 @@
 package calculator;
 
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.CsvFileSource;
 import org.junit.jupiter.params.provider.MethodSource;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
 
 import java.util.stream.Stream;
 
@@ -41,6 +38,13 @@ public class CalculatorTest {
     @Test
     void divideByZero() {
         assertThrows(IllegalArgumentException.class, () -> calculator.calculateExpression("1 / 0"));
+    }
+
+    @Test
+    void checkUnsupportedOperationResult() {
+        char unsupportedOperation = '&';
+        assertThrows(UnsupportedOperationException.class,
+                () -> calculator.calculateOperands(unsupportedOperation, 0, 0));
     }
 
     private static Stream<Arguments> getCalculationArguments() {
